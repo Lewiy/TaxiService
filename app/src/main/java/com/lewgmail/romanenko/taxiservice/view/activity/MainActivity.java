@@ -1,7 +1,9 @@
-package com.lewgmail.romanenko.taxiservice;
+package com.lewgmail.romanenko.taxiservice.view.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import com.lewgmail.romanenko.taxiservice.R;
 
 public class MainActivity extends AppCompatActivity {
 
