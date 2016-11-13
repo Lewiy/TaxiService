@@ -147,7 +147,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/model_registration"
-                            android:inputType="number"
+                            android:inputType="text"
                             android:maxLines="1"
                             android:singleLine="true" />
 
@@ -163,7 +163,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/manufacturer_registration"
-                            android:inputType="number"
+                            android:inputType="text"
                             android:maxLines="1"
                             android:singleLine="true" />
 
@@ -186,23 +186,59 @@
 
                     </android.support.design.widget.TextInputLayout>
 
-                    <Spinner
-                        android:id="@+id/set_num_passenger"
-                        android:layout_width="120dp"
-                        android:layout_height="match_parent"
-                        android:layout_below="@id/plate_number_registration">
 
-                    </Spinner>
-
-                    <Spinner
-                        android:id="@+id/set_car_type"
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_below="@id/plate_number_registration"
-                        android:layout_toRightOf="@id/set_num_passenger">
+                        android:orientation="horizontal">
 
-                    </Spinner>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
+                            <TextView
+                                android:id="@+id/text_lable_num_passenger"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/text_lable_num_passenger" />
+
+                            <Spinner
+                                android:id="@+id/set_num_passenger"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:prompt="@string/num_passenger_title">
+
+                            </Spinner>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/text_lable_car_type"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/text_lable_num_passenger"
+                                android:text="@string/text_lable_car_type" />
+
+                            <Spinner
+                                android:id="@+id/set_car_type"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_toRightOf="@id/set_num_passenger"
+                                android:layout_weight="1"
+                                android:prompt="@string/car_type_title">
+
+                            </Spinner>
+                        </LinearLayout>
+                    </LinearLayout>
                 </RelativeLayout>
             </FrameLayout>
 

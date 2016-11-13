@@ -13,19 +13,24 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.MainActivity">
-
-        </activity>
+        <activity android:name=".view.activity.MainActivity" />
         <activity
             android:name=".view.activity.LoginActivity"
             android:label="@string/title_activity_login">
+
+        </activity>
+        <activity android:name=".view.activity.RegistrationActivity" />
+        <activity android:name=".view.activity.ResetPassword" />
+        <activity
+            android:name=".view.activity.ClientAccount"
+            android:label="@string/title_activity_client_account"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.RegistrationActivity" />
     </application>
 
 </manifest>

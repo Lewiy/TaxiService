@@ -64,11 +64,9 @@ public class RegistrationActivity extends AppCompatActivity {
                 ArrayAdapter.createFromResource(this, R.array.set_car_type, android.R.layout.simple_spinner_item);
         adapterSpinnerCarType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerCarType.setAdapter(adapterSpinnerCarType);
-        mSpinnerCarType.setSelection(INDEX_OF_CATEGORY_SPINNER_CAR_TYPE);
         ArrayAdapter<CharSequence> adapterSpinnerNumPassenger =
                 ArrayAdapter.createFromResource(this, R.array.set_num_passenger, android.R.layout.simple_spinner_item);
         adapterSpinnerCarType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerNumPassenger.setAdapter(adapterSpinnerNumPassenger);
-        mSpinnerNumPassenger.setSelection(INDEX_OF_CATEGORY_SPINNER_NUM_PASSENGER);
     }
 }

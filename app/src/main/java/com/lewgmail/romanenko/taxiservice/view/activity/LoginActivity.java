@@ -111,7 +111,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mForgotPassword.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                Intent myIntent = new Intent(LoginActivity.this, ResetPassword.class);
+                myIntent.putExtra("key", value); //Optional parameters
+                LoginActivity.this.startActivity(myIntent);
             }
         });
     }
