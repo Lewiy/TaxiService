@@ -1,10 +1,10 @@
 package com.lewgmail.romanenko.taxiservice.model.api;
 
+import com.lewgmail.romanenko.taxiservice.model.pojo.Token;
 import com.lewgmail.romanenko.taxiservice.model.pojo.User;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 /**
@@ -14,8 +14,7 @@ import retrofit2.http.POST;
 public interface CreateAccount {
 
     @POST("/user")
-    @FormUrlEncoded
-    Call<User> registration(
+    Call<Token> registration(
             @Body User user);
 
 }

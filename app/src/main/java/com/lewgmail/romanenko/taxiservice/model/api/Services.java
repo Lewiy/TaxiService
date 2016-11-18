@@ -18,17 +18,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Services {
 
     public static final String API_ENDPOINT =
-            "https://****";
+            "http://localhost:8080/";
     private static final int TIMEOUT = 60;
     private static final int WRITE_TIMEOUT = 120;
     private static final int CONNECT_TIMEOUT = 10;
     private static final OkHttpClient.Builder CLIENT = new OkHttpClient
             .Builder();
+
     private static Retrofit.Builder builder =
             new Retrofit.Builder()
                     .baseUrl(API_ENDPOINT)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
+
     private static Interceptor interceptor = new Interceptor() {
         @Override
         public Response intercept(Chain chain) throws IOException {
