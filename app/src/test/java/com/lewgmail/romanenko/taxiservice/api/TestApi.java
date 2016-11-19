@@ -1,8 +1,8 @@
 package com.lewgmail.romanenko.taxiservice.api;
 
 import com.google.gson.stream.JsonReader;
-import com.lewgmail.romanenko.taxiservice.model.Model;
-import com.lewgmail.romanenko.taxiservice.model.api.CreateAccount;
+import com.lewgmail.romanenko.taxiservice.model.DataManager.Model;
+import com.lewgmail.romanenko.taxiservice.model.api.UserServices;
 import com.lewgmail.romanenko.taxiservice.model.pojo.Car;
 import com.lewgmail.romanenko.taxiservice.model.pojo.CarType;
 import com.lewgmail.romanenko.taxiservice.model.pojo.Token;
@@ -31,7 +31,7 @@ public class TestApi extends BaseTest {
     private Token token;
     private MockWebServer server;
     private JsonReader jsonReader;
-    private CreateAccount service;
+    private UserServices service;
 
     @Before
     public void beforTest() throws Exception {
@@ -61,7 +61,7 @@ public class TestApi extends BaseTest {
         server.setDispatcher(dispatch);
         HttpUrl baseUrl = server.url(serverAdress);
         //  service = Services.createTestService(baseUrl.toString(),
-        //     CreateAccount.class);
+        //     UserServices.class);
 
     }
 

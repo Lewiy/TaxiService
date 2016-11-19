@@ -1,7 +1,7 @@
-package com.lewgmail.romanenko.taxiservice.model;
+package com.lewgmail.romanenko.taxiservice.model.DataManager;
 
-import com.lewgmail.romanenko.taxiservice.model.api.CreateAccount;
 import com.lewgmail.romanenko.taxiservice.model.api.Services;
+import com.lewgmail.romanenko.taxiservice.model.api.UserServices;
 import com.lewgmail.romanenko.taxiservice.model.pojo.Token;
 import com.lewgmail.romanenko.taxiservice.model.pojo.User;
 
@@ -17,7 +17,7 @@ public class Model {
 
     public Token registration(User user) throws IOException {
 
-        CreateAccount servises = Services.createService(CreateAccount.class);
+        UserServices servises = Services.createService(UserServices.class);
         Call<Token> call = servises.registration(user);
         //Log.d("My log1"," Токен" +call.execute().body().getAccessToken());
         // Log.d("My log2","Номер токена" + call.execute().body().getExpiresIn());
