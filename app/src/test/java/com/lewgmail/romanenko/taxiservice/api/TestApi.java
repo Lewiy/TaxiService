@@ -66,7 +66,7 @@ public class TestApi extends BaseTest {
     }
 
     @Test
-    public void test() throws Exception {
+    public void testCreateUser() throws Exception {
         Model model = new Model();
         User user = new User();
 

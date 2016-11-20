@@ -11,7 +11,7 @@ public class Customer {
 
     @SerializedName("customerId")
     @Expose
-    private String customerId;
+    private long customerId;
     @SerializedName("name")
     @Expose
     private String name;
@@ -19,14 +19,14 @@ public class Customer {
     /**
      * @return The customerId
      */
-    public String getCustomerId() {
+    public long getCustomerId() {
         return customerId;
     }
 
     /**
      * @param customerId The customerId
      */
-    public void setCustomerId(String customerId) {
+    public void setCustomerId(long customerId) {
         this.customerId = customerId;
     }
 

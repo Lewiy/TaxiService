@@ -14,7 +14,7 @@ public class OrderId {
 
     @SerializedName("orderId")
     @Expose
-    private String orderId;
+    private long orderId;
     @SerializedName("startTime")
     @Expose
     private String startTime;
@@ -35,7 +35,7 @@ public class OrderId {
     private TaxiDriver taxiDriver;
     @SerializedName("price")
     @Expose
-    private String price;
+    private double price;
     @SerializedName("additionalRequirements")
     @Expose
     private List<AdditionalRequirement> additionalRequirements = new ArrayList<AdditionalRequirement>();
@@ -43,14 +43,14 @@ public class OrderId {
     /**
      * @return The orderId
      */
-    public String getOrderId() {
+    public long getOrderId() {
         return orderId;
     }
 
     /**
      * @param orderId The orderId
      */
-    public void setOrderId(String orderId) {
+    public void setOrderId(long orderId) {
         this.orderId = orderId;
     }
 
@@ -141,14 +141,14 @@ public class OrderId {
     /**
      * @return The price
      */
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
     /**
      * @param price The price
      */
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

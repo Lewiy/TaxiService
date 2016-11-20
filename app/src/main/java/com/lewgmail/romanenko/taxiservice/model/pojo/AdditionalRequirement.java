@@ -11,7 +11,7 @@ public class AdditionalRequirement {
 
     @SerializedName("id")
     @Expose
-    private String id;
+    private int id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -22,14 +22,14 @@ public class AdditionalRequirement {
     /**
      * @return The id
      */
-    public String getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id The id
      */
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

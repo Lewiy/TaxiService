@@ -11,7 +11,7 @@ public class TaxiDriver {
 
     @SerializedName("taxiDriverId")
     @Expose
-    private String taxiDriverId;
+    private long taxiDriverId;
     @SerializedName("name")
     @Expose
     private String name;
@@ -19,14 +19,14 @@ public class TaxiDriver {
     /**
      * @return The taxiDriverId
      */
-    public String getTaxiDriverId() {
+    public long getTaxiDriverId() {
         return taxiDriverId;
     }
 
     /**
      * @param taxiDriverId The taxiDriverId
      */
-    public void setTaxiDriverId(String taxiDriverId) {
+    public void setTaxiDriverId(long taxiDriverId) {
         this.taxiDriverId = taxiDriverId;
     }
 
