@@ -13,7 +13,7 @@ import retrofit2.Call;
  * Created by Lev on 14.11.2016.
  */
 
-public class Model {
+public class ManagerUser {
 
     public Token registration(User user) throws IOException {
 
