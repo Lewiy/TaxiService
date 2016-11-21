@@ -2,7 +2,7 @@ package com.lewgmail.romanenko.taxiservice.api;
 
 import com.google.gson.stream.JsonReader;
 import com.lewgmail.romanenko.taxiservice.model.api.UserServices;
-import com.lewgmail.romanenko.taxiservice.model.dataManager.Model;
+import com.lewgmail.romanenko.taxiservice.model.dataManager.ManagerUser;
 import com.lewgmail.romanenko.taxiservice.model.pojo.Car;
 import com.lewgmail.romanenko.taxiservice.model.pojo.CarType;
 import com.lewgmail.romanenko.taxiservice.model.pojo.Token;
@@ -67,7 +67,7 @@ public class TestApi extends BaseTest {
 
     @Test
     public void testCreateUser() throws Exception {
-        Model model = new Model();
+        ManagerUser model = new ManagerUser();
         User user = new User();
 
         user.setName("lev");
