@@ -1,8 +1,8 @@
 package com.lewgmail.romanenko.taxiservice.api;
 
 import com.google.gson.stream.JsonReader;
-import com.lewgmail.romanenko.taxiservice.model.DataManager.Model;
 import com.lewgmail.romanenko.taxiservice.model.api.UserServices;
+import com.lewgmail.romanenko.taxiservice.model.dataManager.Model;
 import com.lewgmail.romanenko.taxiservice.model.pojo.Car;
 import com.lewgmail.romanenko.taxiservice.model.pojo.CarType;
 import com.lewgmail.romanenko.taxiservice.model.pojo.Token;

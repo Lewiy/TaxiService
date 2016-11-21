@@ -1,4 +1,4 @@
-package com.lewgmail.romanenko.taxiservice.model.DataManager;
+package com.lewgmail.romanenko.taxiservice.model.dataManager;
 
 import com.lewgmail.romanenko.taxiservice.model.pojo.Car;
 
@@ -13,13 +13,13 @@ public class LoggedUser {
 
     private static LoggedUser mInstance;
     private String name;
+    private long userId;
     private String email;
     private String password;
     private List<String> mobileNumbers = new ArrayList<String>();
     private String userType;
     private Car car;
     private String token;
-
     private LoggedUser() {
 
     }
@@ -28,6 +28,14 @@ public class LoggedUser {
         if (mInstance == null)
             mInstance = new LoggedUser();
         return mInstance;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getName() {

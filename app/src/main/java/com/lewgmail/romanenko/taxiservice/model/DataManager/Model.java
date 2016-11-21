@@ -1,4 +1,4 @@
-package com.lewgmail.romanenko.taxiservice.model.DataManager;
+package com.lewgmail.romanenko.taxiservice.model.dataManager;
 
 import com.lewgmail.romanenko.taxiservice.model.api.Services;
 import com.lewgmail.romanenko.taxiservice.model.api.UserServices;

@@ -1,8 +1,9 @@
-package com.lewgmail.romanenko.taxiservice.model.DataManager;
+package com.lewgmail.romanenko.taxiservice.model.dataManager;
 
 import com.lewgmail.romanenko.taxiservice.model.api.OrderApiDrivCust;
 import com.lewgmail.romanenko.taxiservice.model.api.Services;
 import com.lewgmail.romanenko.taxiservice.model.pojo.OrderId;
+import com.lewgmail.romanenko.taxiservice.model.pojo.OrderStatus;
 import com.lewgmail.romanenko.taxiservice.presenter.BasePresenter;
 
 import retrofit2.adapter.rxjava.HttpException;
@@ -33,7 +34,7 @@ public class ManagerOrderApiDrivCust {
 
     public void loadOrderId(int orderId) {
         OrderApiDrivCust servises = Services.createService(OrderApiDrivCust.class);
-        Observable<OrderId> observer = servises.getOrderId(/*LoggedUser.getmInstance().getToken()"*/ "21334sfg23", orderId);
+        Observable<OrderId> observer = servises.getOrderId(LoggedUser.getmInstance().getToken(), orderId);
 
         observer.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -54,6 +55,35 @@ public class ManagerOrderApiDrivCust {
                     public void onNext(OrderId orderId) {
                         System.out.println(" Дані пришли - кастомер" + orderId.getCustomer());
                         mBasePresenter.setOrderSpecificId(orderId);
+                    }
+                });
+    }
+
+    public void acceptOrder(int orderId, OrderStatus orderStatus) {
+
+        OrderApiDrivCust servises = Services.createService(OrderApiDrivCust.class);
+        Observable<String> observer = servises.acceptOrder(LoggedUser.getmInstance().getToken(),
+                orderId,
+                LoggedUser.getmInstance().getUserId(),
+                orderStatus.toString());
+
+        observer.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+
+                        mBasePresenter.acceptOrder();
                     }
                 });
     }

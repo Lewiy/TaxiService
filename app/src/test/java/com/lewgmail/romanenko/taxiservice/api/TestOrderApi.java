@@ -1,7 +1,7 @@
 package com.lewgmail.romanenko.taxiservice.api;
 
-import com.lewgmail.romanenko.taxiservice.model.DataManager.ManagerOrderApiDrivCust;
 import com.lewgmail.romanenko.taxiservice.model.api.UserServices;
+import com.lewgmail.romanenko.taxiservice.model.dataManager.ManagerOrderApiDrivCust;
 import com.lewgmail.romanenko.taxiservice.model.pojo.OrderId;
 import com.lewgmail.romanenko.taxiservice.model.pojo.Token;
 import com.lewgmail.romanenko.taxiservice.presenter.BasePresenter;
@@ -62,7 +62,7 @@ public class TestOrderApi extends BaseTest {
 
             @Override
             public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
-                if (request.getPath().equals("/order/125")) {
+                if (request.getPath().equals("/order/121")) {
                     return new MockResponse().setResponseCode(200).setBody("{\n" +
                             "  \"orderId\" : 125,\n" +
                             "  \"startTime\" : \"DateTime\",\n" +
@@ -110,7 +110,11 @@ public class TestOrderApi extends BaseTest {
 
         TimeUnit.SECONDS.sleep(3);
 
-        assertEquals(125, basePresenter.getOrderSpecificId().getOrderId());
+        // Testing errors
+        assertEquals("OK", basePresenter.getResponceMsg());
+
+
+        // assertEquals(125, basePresenter.getOrderSpecificId().getOrderId());
         //assertEquals(OrderStatus.DONE,basePresenter.getOrderSpecificId().);
 
         //  assertEquals(86400, token.getExpiresIn());

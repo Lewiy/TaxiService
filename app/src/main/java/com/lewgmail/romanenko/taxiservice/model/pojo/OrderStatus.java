@@ -5,5 +5,5 @@ package com.lewgmail.romanenko.taxiservice.model.pojo;
  */
 
 public enum OrderStatus {
-    ACCEPTED, CANCELLED, DONE
+   NEW, ACCEPTED, CANCELLED, DONE
 }

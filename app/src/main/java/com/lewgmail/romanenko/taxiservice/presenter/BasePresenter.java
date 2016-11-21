@@ -13,6 +13,8 @@ public class BasePresenter implements BasePresenterInterface {
     private View view;
     private OrderId orderId;
 
+    // for testing
+    private String responceMsg;
 
     public BasePresenter(View view) {
         this.view = view;
@@ -37,11 +39,21 @@ public class BasePresenter implements BasePresenterInterface {
         this.orderId = orderId;
     }
 
+    public String getResponceMsg() {
+        return this.responceMsg;
+    }
+
+    public void acceptOrder() {
+
+    }
+
     /*
      Error processing
      */
     public void onFinishRequest(int responceCode, String responceMsg) {
 
-
+        this.responceMsg = responceMsg;
     }
+
+
 }
