@@ -1,9 +1,9 @@
 package com.lewgmail.romanenko.taxiservice.model.api;
 
+import com.lewgmail.romanenko.taxiservice.model.pojo.MarkOrder;
 import com.lewgmail.romanenko.taxiservice.model.pojo.OrderId;
 
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.PUT;
@@ -19,10 +19,8 @@ public interface OrderApiDrivCust {
     Observable<OrderId> getOrderId(@Header("Authorization") String authorization,
                                    @Path("orderId") long orderId);
 
-    @FormUrlEncoded
     @PUT("order/{orderId}/status")
     Observable<String> acceptOrder(@Header("Authorization") String authorization,
                                    @Path("orderId") long orderId,
-                                   @Field("userId") long userId,
-                                   @Field("type") String orderStatus);
+                                   @Body MarkOrder markOrder);
 }

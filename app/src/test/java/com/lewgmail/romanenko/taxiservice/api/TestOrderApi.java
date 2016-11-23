@@ -2,7 +2,8 @@ package com.lewgmail.romanenko.taxiservice.api;
 
 import com.lewgmail.romanenko.taxiservice.model.api.UserServices;
 import com.lewgmail.romanenko.taxiservice.model.dataManager.ManagerOrderApiDrivCust;
-import com.lewgmail.romanenko.taxiservice.model.pojo.OrderId;
+import com.lewgmail.romanenko.taxiservice.model.pojo.MarkOrder;
+import com.lewgmail.romanenko.taxiservice.model.pojo.OrderStatus;
 import com.lewgmail.romanenko.taxiservice.model.pojo.Token;
 import com.lewgmail.romanenko.taxiservice.presenter.BasePresenter;
 import com.squareup.okhttp.HttpUrl;
@@ -20,7 +21,6 @@ import java.util.concurrent.TimeUnit;
 import rx.Scheduler;
 import rx.android.plugins.RxAndroidPlugins;
 import rx.android.plugins.RxAndroidSchedulersHook;
-import rx.observers.TestSubscriber;
 import rx.schedulers.Schedulers;
 
 import static junit.framework.Assert.assertEquals;
@@ -32,9 +32,14 @@ import static junit.framework.Assert.assertEquals;
 public class TestOrderApi extends BaseTest {
 
     private Token token;
-    private MockWebServer server;
+    private MockWebServer server = new MockWebServer();
+    ;
     private com.google.gson.stream.JsonReader jsonReader;
     private UserServices service;
+    private BasePresenter basePresenter = new BasePresenter();
+    ;
+    private ManagerOrderApiDrivCust manager = new ManagerOrderApiDrivCust(basePresenter);
+    ;
 
     @Before
     public void beforeTest() throws Exception {
@@ -51,7 +56,7 @@ public class TestOrderApi extends BaseTest {
         /////
 
 
-        server = new MockWebServer();
+
 
         // Schedule some responses.
         //server.enqueue(new MockResponse().setBody("sup, bra?"));
@@ -64,7 +69,7 @@ public class TestOrderApi extends BaseTest {
             public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
                 if (request.getPath().equals("/order/121")) {
                     return new MockResponse().setResponseCode(200).setBody("{\n" +
-                            "  \"orderId\" : 125,\n" +
+                            "  \"orderId\" : 121,\n" +
                             "  \"startTime\" : \"DateTime\",\n" +
                             "  \"startPoint\" : \"ул. лоховская 12\",\n" +
                             "  \"endPoint\" : \"ул. лоховская 13\",\n" +
@@ -85,8 +90,13 @@ public class TestOrderApi extends BaseTest {
                             "    }]\n" +
                             "}");
                 } else {
-                    return new MockResponse().setResponseCode(404);
+                    if (request.getPath().equals("/order/95/status")) {
+                        return new MockResponse().setResponseCode(200).setBody("lol");
+                    } else {
+                        return new MockResponse().setResponseCode(404);
+                    }
                 }
+
             }
         };
         server.setDispatcher(dispatch);
@@ -96,31 +106,61 @@ public class TestOrderApi extends BaseTest {
 
     @Test
     public void getSpecificOrderId() throws Exception {
-        BasePresenter basePresenter = new BasePresenter();
-        ManagerOrderApiDrivCust manager = new ManagerOrderApiDrivCust(basePresenter);
+
+
+        //////////////////////      //test Error//////////////////////////
+
         manager.loadOrderId(125);
-        TestSubscriber<OrderId> testSubscriber = new TestSubscriber<>();
 
+        // Request
         RecordedRequest request = server.takeRequest();
-
         assertEquals("GET /order/125 HTTP/1.1", request.getRequestLine());
-
         assertEquals("application/json", request.getHeader("Content-Type"));
         assertEquals("21334sfg23", request.getHeader("Authorization"));
-
         TimeUnit.SECONDS.sleep(3);
-
         // Testing errors
-        assertEquals("OK", basePresenter.getResponceMsg());
+        assertEquals("HTTP 404 OK", basePresenter.getResponseMsg());
 
 
-        // assertEquals(125, basePresenter.getOrderSpecificId().getOrderId());
-        //assertEquals(OrderStatus.DONE,basePresenter.getOrderSpecificId().);
-
-        //  assertEquals(86400, token.getExpiresIn());
+        //////////////////    /// test data///////////////////////////////////
+        manager.loadOrderId(121);
+        TimeUnit.SECONDS.sleep(3);
+        // Request
+        request = server.takeRequest();
+        assertEquals("GET /order/121 HTTP/1.1", request.getRequestLine());
+        assertEquals("application/json", request.getHeader("Content-Type"));
+        assertEquals("21334sfg23", request.getHeader("Authorization"));
+        TimeUnit.SECONDS.sleep(3);
+        // Received data
+        assertEquals(121, basePresenter.getOrderSpecificId().getOrderId());
+        assertEquals("Водитель должен быть с розовыми ушками на голове",
+                basePresenter.getOrderSpecificId().getAdditionalRequirements().get(0).getDescription());
+        assertEquals("пупсовод", basePresenter.getOrderSpecificId().getTaxiDriver().getName());
 
     }
 
+    @Test
+    public void acceptRefuseDoneOrder() throws Exception {
+
+        MarkOrder markOrder = new MarkOrder();
+        markOrder.setUserId(100);
+        markOrder.setType(OrderStatus.ACCEPTED.toString());
+        manager.acceptRefuseDoneOrder(95, markOrder);
+        /////////////////////Test Error////////////////////////////
+        RecordedRequest request = server.takeRequest();
+        assertEquals("application/json; charset=UTF-8", request.getHeader("Content-Type"));
+        assertEquals("21334sfg23", request.getHeader("Authorization"));
+        assertEquals("PUT /order/95/status HTTP/1.1", request.getRequestLine());
+        assertEquals("{\n" +
+                "  \"userId\" : \"95\",\n" +
+                "  \"type\" : \"DONE\"\n" +
+                "}", request.getBody());
+        //  TimeUnit.SECONDS.sleep(3);
+        /////////////////////Test Data////////////////////////////
+        //assertEquals("HTTP/1.1 200 OK", basePresenter.getResponseMsg());
+
+
+    }
     @After
     public void afterTest() throws Exception {
 

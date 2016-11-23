@@ -19,7 +19,7 @@ public class LoggedUser {
     private List<String> mobileNumbers = new ArrayList<String>();
     private String userType;
     private Car car;
-    private String token;
+    private String token = "21334sfg23";
     private LoggedUser() {
 
     }

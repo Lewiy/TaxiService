@@ -14,7 +14,7 @@ public class BasePresenter implements BasePresenterInterface {
     private OrderId orderId;
 
     // for testing
-    private String responceMsg;
+    private String responseMsg;
 
     public BasePresenter(View view) {
         this.view = view;
@@ -39,20 +39,21 @@ public class BasePresenter implements BasePresenterInterface {
         this.orderId = orderId;
     }
 
-    public String getResponceMsg() {
-        return this.responceMsg;
-    }
 
-    public void acceptOrder() {
+    /////////////////////RequestMethod///////////////////////////////////////////////
 
+
+    ////////////////Response method///////////////////////////////////////////////
+    public String getResponseMsg() {
+        return this.responseMsg;
     }
 
     /*
      Error processing
      */
-    public void onFinishRequest(int responceCode, String responceMsg) {
+    public void onFinishRequest(int responceCode, String responseMsg) {
 
-        this.responceMsg = responceMsg;
+        this.responseMsg = responseMsg;
     }
 
 

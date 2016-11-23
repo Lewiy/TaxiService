@@ -2,8 +2,8 @@ package com.lewgmail.romanenko.taxiservice.model.dataManager;
 
 import com.lewgmail.romanenko.taxiservice.model.api.OrderApiDrivCust;
 import com.lewgmail.romanenko.taxiservice.model.api.Services;
+import com.lewgmail.romanenko.taxiservice.model.pojo.MarkOrder;
 import com.lewgmail.romanenko.taxiservice.model.pojo.OrderId;
-import com.lewgmail.romanenko.taxiservice.model.pojo.OrderStatus;
 import com.lewgmail.romanenko.taxiservice.presenter.BasePresenter;
 
 import retrofit2.adapter.rxjava.HttpException;
@@ -59,13 +59,12 @@ public class ManagerOrderApiDrivCust {
                 });
     }
 
-    public void acceptOrder(int orderId, OrderStatus orderStatus) {
+    public void acceptRefuseDoneOrder(long orderId,MarkOrder markOrder) {
 
         OrderApiDrivCust servises = Services.createService(OrderApiDrivCust.class);
         Observable<String> observer = servises.acceptOrder(LoggedUser.getmInstance().getToken(),
                 orderId,
-                LoggedUser.getmInstance().getUserId(),
-                orderStatus.toString());
+                markOrder);
 
         observer.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -77,13 +76,16 @@ public class ManagerOrderApiDrivCust {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        System.out.println("Помилка");
+                        if (e instanceof HttpException)
+                            mBasePresenter.onFinishRequest(((HttpException) e).code(), e.getMessage());
+                        else mBasePresenter.onFinishRequest(0, e.getMessage());
                     }
 
                     @Override
                     public void onNext(String s) {
 
-                        mBasePresenter.acceptOrder();
+                        mBasePresenter.onFinishRequest(200,s);
                     }
                 });
     }
