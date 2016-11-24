@@ -3,6 +3,7 @@ package com.lewgmail.romanenko.taxiservice.api;
 import com.lewgmail.romanenko.taxiservice.model.api.UserServices;
 import com.lewgmail.romanenko.taxiservice.model.dataManager.ManagerOrderApiCust;
 import com.lewgmail.romanenko.taxiservice.model.dataManager.ManagerOrderApiDrivCust;
+import com.lewgmail.romanenko.taxiservice.model.dataManager.ManagerOrderApiDriver;
 import com.lewgmail.romanenko.taxiservice.model.pojo.AddOrder;
 import com.lewgmail.romanenko.taxiservice.model.pojo.AdditionalRequirAddOrderSend;
 import com.lewgmail.romanenko.taxiservice.model.pojo.MarkOrder;
@@ -11,6 +12,7 @@ import com.lewgmail.romanenko.taxiservice.model.pojo.Token;
 import com.lewgmail.romanenko.taxiservice.model.pojo.UpdateOrder;
 import com.lewgmail.romanenko.taxiservice.presenter.BasePresenter;
 import com.lewgmail.romanenko.taxiservice.presenter.CustomerPresenter;
+import com.lewgmail.romanenko.taxiservice.presenter.DriverPresenter;
 import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.mockwebserver.Dispatcher;
 import com.squareup.okhttp.mockwebserver.MockResponse;
@@ -104,11 +106,27 @@ public class TestOrderApi extends BaseTest {
                 }
                 if (request.getMethod().equals("PUT") && request.getPath().equals("/order/405")) {
                     return new MockResponse().setResponseCode(200);
+                }
+                if (request.getMethod().equals("GET") && request.getPath().equals("/order/NEW")) {
+                    return new MockResponse().setResponseCode(200).setBody("" +
+
+                            "[{" +
+                            "\"orderId\":127," +
+                            "\"startTime\":\"2016-11-24T20:10\"," +
+                            "\"startPoint\":\"lolol\"," +
+                            "\"endPoint\":\"lo\"," +
+                            "\"price\":123.134" +
+                            "}," +
+                            "{" +
+                            "\"orderId\":253," +
+                            "\"startTime\":\"2016-11-24T20:11\"," +
+                            "\"startPoint\":\"lala\"," +
+                            "\"endPoint\" : \"lalala\"," +
+                            "\"price\":126.04" +
+                            "}]");
                 } else {
                     return new MockResponse().setResponseCode(404);
                 }
-
-
             }
         };
         server.setDispatcher(dispatch);
@@ -170,8 +188,6 @@ public class TestOrderApi extends BaseTest {
         TimeUnit.SECONDS.sleep(3);
         /////////////////////Test Data/////////////////////////////
         assertEquals(0, basePresenter.getResponceCode());
-
-
     }
 
     @Test
@@ -244,7 +260,7 @@ public class TestOrderApi extends BaseTest {
         RecordedRequest request = server.takeRequest();
         assertEquals("application/json", request.getHeader("Content-Type"));
         assertEquals("21334sfg23", request.getHeader("Authorization"));
-        assertEquals("DELETE /order/12 HTTP/1.1", request.getRequestLine());
+        assertEquals("DELETE /order/405 HTTP/1.1", request.getRequestLine());
 
         //Test response code
         assertEquals(0, customerPresenter.getCodeMsg());
@@ -289,7 +305,7 @@ public class TestOrderApi extends BaseTest {
         RecordedRequest request = server.takeRequest();
         assertEquals("application/json; charset=UTF-8", request.getHeader("Content-Type"));
         assertEquals("21334sfg23", request.getHeader("Authorization"));
-        assertEquals("PUT /order/12 HTTP/1.1", request.getRequestLine());
+        assertEquals("PUT /order/405 HTTP/1.1", request.getRequestLine());
         assertEquals("{" +
                 "\"startTime\":\"2016-11-24T20:10\"," +
                 "\"startPoint\":\"Вул. Лалка\"," +
@@ -301,6 +317,40 @@ public class TestOrderApi extends BaseTest {
 
         //Test response code
         assertEquals(0, customerPresenter.getCodeMsg());
+    }
+
+
+    @Test
+    public void testGetAllOrders() throws Exception {
+
+        // Test data
+        DriverPresenter driverPresenter
+                = new DriverPresenter();
+        ManagerOrderApiDriver managerOrderApiDriver
+                = new ManagerOrderApiDriver(driverPresenter);
+        managerOrderApiDriver.getAllOrdersType(OrderStatus.NEW);
+
+        // Test request
+        RecordedRequest request = server.takeRequest();
+        assertEquals("application/json", request.getHeader("Content-Type"));
+        assertEquals("21334sfg23", request.getHeader("Authorization"));
+        assertEquals("GET /order/NEW HTTP/1.1", request.getRequestLine());
+
+        //test response
+        TimeUnit.SECONDS.sleep(3);
+        assertEquals(127, driverPresenter.getOrder().get(0).getOrderId());
+        assertEquals("lolol", driverPresenter.getOrder().get(0).getStartPoint());
+        assertEquals("2016-11-24T20:10", driverPresenter.getOrder().get(0).getStartTime());
+        assertEquals("lo", driverPresenter.getOrder().get(0).getEndPoint());
+        assertEquals(123.134, driverPresenter.getOrder().get(0).getPrice());
+
+        assertEquals(253, driverPresenter.getOrder().get(1).getOrderId());
+        assertEquals("lala", driverPresenter.getOrder().get(1).getStartPoint());
+        assertEquals("2016-11-24T20:11", driverPresenter.getOrder().get(1).getStartTime());
+        assertEquals("lalala", driverPresenter.getOrder().get(1).getEndPoint());
+        assertEquals(126.04, driverPresenter.getOrder().get(1).getPrice());
+
+        assertEquals(0, driverPresenter.getResponseCode());
     }
 
     @After

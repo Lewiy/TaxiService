@@ -20,10 +20,10 @@ import rx.schedulers.Schedulers;
 
 public class ManagerOrderApiDriver {
 
-    private DriverPresenter mDriverPreswnter;
+    private DriverPresenter mDriverPresenter;
 
     public ManagerOrderApiDriver(DriverPresenter driverPresenter) {
-        this.mDriverPreswnter = driverPresenter;
+        this.mDriverPresenter = driverPresenter;
     }
 
     public void getAllOrdersType(OrderStatus orderStatus) {
@@ -43,8 +43,8 @@ public class ManagerOrderApiDriver {
                     public void onError(Throwable e) {
 
                         if (e instanceof HttpException)
-                            mDriverPreswnter.onFinishRequest(((HttpException) e).code(), e.getMessage());
-                        else mDriverPreswnter.onFinishRequest(0, e.getMessage());
+                            mDriverPresenter.onFinishRequest(((HttpException) e).code(), e.getMessage());
+                        else mDriverPresenter.onFinishRequest(0, e.getMessage());
 
                     }
 
@@ -52,7 +52,7 @@ public class ManagerOrderApiDriver {
                     public void onNext(List<Order> orders) {
 
                         System.out.println("Дані прийшли" + getClass().getName());
-                        mDriverPreswnter.loadOrderByType(orders);
+                        mDriverPresenter.loadOrderByType(orders);
                     }
                 });
     }

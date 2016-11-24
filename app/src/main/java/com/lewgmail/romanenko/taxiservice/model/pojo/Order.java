@@ -11,7 +11,7 @@ public class Order {
 
     @SerializedName("orderId")
     @Expose
-    private String orderId;
+    private long orderId;
     @SerializedName("startTime")
     @Expose
     private String startTime;
@@ -23,19 +23,19 @@ public class Order {
     private String endPoint;
     @SerializedName("price")
     @Expose
-    private String price;
+    private double price;
 
     /**
      * @return The orderId
      */
-    public String getOrderId() {
+    public long getOrderId() {
         return orderId;
     }
 
     /**
      * @param orderId The orderId
      */
-    public void setOrderId(String orderId) {
+    public void setOrderId(long orderId) {
         this.orderId = orderId;
     }
 
@@ -84,15 +84,14 @@ public class Order {
     /**
      * @return The price
      */
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
     /**
      * @param price The price
      */
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
-
 }
