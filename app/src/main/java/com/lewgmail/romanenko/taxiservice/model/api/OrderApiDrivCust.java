@@ -19,7 +19,7 @@ public interface OrderApiDrivCust {
     Observable<OrderId> getOrderId(@Header("Authorization") String authorization,
                                    @Path("orderId") long orderId);
 
-    @PUT("order/{orderId}/status")
+    @PUT("/order/{orderId}/status")
     Observable<String> acceptOrder(@Header("Authorization") String authorization,
                                    @Path("orderId") long orderId,
                                    @Body MarkOrder markOrder);

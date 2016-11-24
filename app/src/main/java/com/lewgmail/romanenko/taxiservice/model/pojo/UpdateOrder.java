@@ -23,7 +23,7 @@ public class UpdateOrder {
     private String endPoint;
     @SerializedName("additionalRequirements")
     @Expose
-    private List<AdditionalRequirement> additionalRequirements = new ArrayList<AdditionalRequirement>();
+    private List<AdditionalRequirAddOrderSend> additionalRequirements = new ArrayList<AdditionalRequirAddOrderSend>();
 
     /**
      * @return The startTime
@@ -70,14 +70,14 @@ public class UpdateOrder {
     /**
      * @return The additionalRequirements
      */
-    public List<AdditionalRequirement> getAdditionalRequirements() {
+    public List<AdditionalRequirAddOrderSend> getAdditionalRequirements() {
         return additionalRequirements;
     }
 
     /**
      * @param additionalRequirements The additionalRequirements
      */
-    public void setAdditionalRequirements(List<AdditionalRequirement> additionalRequirements) {
+    public void setAdditionalRequirements(List<AdditionalRequirAddOrderSend> additionalRequirements) {
         this.additionalRequirements = additionalRequirements;
     }
 

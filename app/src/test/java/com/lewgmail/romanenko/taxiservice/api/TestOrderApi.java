@@ -1,11 +1,16 @@
 package com.lewgmail.romanenko.taxiservice.api;
 
 import com.lewgmail.romanenko.taxiservice.model.api.UserServices;
+import com.lewgmail.romanenko.taxiservice.model.dataManager.ManagerOrderApiCust;
 import com.lewgmail.romanenko.taxiservice.model.dataManager.ManagerOrderApiDrivCust;
+import com.lewgmail.romanenko.taxiservice.model.pojo.AddOrder;
+import com.lewgmail.romanenko.taxiservice.model.pojo.AdditionalRequirAddOrderSend;
 import com.lewgmail.romanenko.taxiservice.model.pojo.MarkOrder;
 import com.lewgmail.romanenko.taxiservice.model.pojo.OrderStatus;
 import com.lewgmail.romanenko.taxiservice.model.pojo.Token;
+import com.lewgmail.romanenko.taxiservice.model.pojo.UpdateOrder;
 import com.lewgmail.romanenko.taxiservice.presenter.BasePresenter;
+import com.lewgmail.romanenko.taxiservice.presenter.CustomerPresenter;
 import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.mockwebserver.Dispatcher;
 import com.squareup.okhttp.mockwebserver.MockResponse;
@@ -16,6 +21,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import rx.Scheduler;
@@ -33,13 +43,13 @@ public class TestOrderApi extends BaseTest {
 
     private Token token;
     private MockWebServer server = new MockWebServer();
-    ;
+
     private com.google.gson.stream.JsonReader jsonReader;
     private UserServices service;
     private BasePresenter basePresenter = new BasePresenter();
-    ;
+
     private ManagerOrderApiDrivCust manager = new ManagerOrderApiDrivCust(basePresenter);
-    ;
+
 
     @Before
     public void beforeTest() throws Exception {
@@ -55,13 +65,6 @@ public class TestOrderApi extends BaseTest {
 
         /////
 
-
-
-
-        // Schedule some responses.
-        //server.enqueue(new MockResponse().setBody("sup, bra?"));
-        // server.enqueue(new MockResponse().setBody("yo dog"));
-        // Start the server.
         server.start(8080);
         final Dispatcher dispatch = new Dispatcher() {
 
@@ -89,13 +92,22 @@ public class TestOrderApi extends BaseTest {
                             "      \"description\" : \"Водитель должен быть с розовыми ушками на голове\"\n" +
                             "    }]\n" +
                             "}");
-                } else {
-                    if (request.getPath().equals("/order/95/status")) {
-                        return new MockResponse().setResponseCode(200).setBody("lol");
-                    } else {
-                        return new MockResponse().setResponseCode(404);
-                    }
                 }
+                if (request.getPath().equals("/order/95/status")) {
+                    return new MockResponse().setResponseCode(200);
+                }
+                if (request.getMethod().equals("POST") && request.getPath().equals("/order")) {
+                    return new MockResponse().setResponseCode(200);
+                }
+                if (request.getMethod().equals("DELETE") && request.getPath().equals("/order/405")) {
+                    return new MockResponse().setResponseCode(200);
+                }
+                if (request.getMethod().equals("PUT") && request.getPath().equals("/order/405")) {
+                    return new MockResponse().setResponseCode(200);
+                } else {
+                    return new MockResponse().setResponseCode(404);
+                }
+
 
             }
         };
@@ -151,16 +163,146 @@ public class TestOrderApi extends BaseTest {
         assertEquals("application/json; charset=UTF-8", request.getHeader("Content-Type"));
         assertEquals("21334sfg23", request.getHeader("Authorization"));
         assertEquals("PUT /order/95/status HTTP/1.1", request.getRequestLine());
-        assertEquals("{\n" +
-                "  \"userId\" : \"95\",\n" +
-                "  \"type\" : \"DONE\"\n" +
-                "}", request.getBody());
-        //  TimeUnit.SECONDS.sleep(3);
-        /////////////////////Test Data////////////////////////////
-        //assertEquals("HTTP/1.1 200 OK", basePresenter.getResponseMsg());
+        assertEquals("{" +
+                "\"userId\":100," +
+                "\"type\":\"ACCEPTED\"" +
+                "}", request.getBody().readUtf8());
+        TimeUnit.SECONDS.sleep(3);
+        /////////////////////Test Data/////////////////////////////
+        assertEquals(0, basePresenter.getResponceCode());
 
 
     }
+
+    @Test
+    public void addOrder() throws Exception {
+        // Configuration request "add order"
+        AddOrder addOrder = new AddOrder();
+        addOrder.setCustomerId(123421);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm",
+                Locale.getDefault());
+        Date date = new Date();
+
+        addOrder.setStartTime("2016-11-24T20:10");
+        addOrder.setStartPoint("Вул. лоховська 12");
+        addOrder.setEndPoint("Вул. татата");
+        List<AdditionalRequirAddOrderSend> additionalRequirAddOrderSends
+                = new ArrayList<>();
+
+        AdditionalRequirAddOrderSend additionalRequirAddOrderSend
+                = new AdditionalRequirAddOrderSend();
+        additionalRequirAddOrderSend.setReqId(123);
+        additionalRequirAddOrderSend.setReqValueId(34);
+
+        AdditionalRequirAddOrderSend additionalRequir
+                = new AdditionalRequirAddOrderSend();
+        additionalRequir.setReqId(567);
+        additionalRequir.setReqValueId(12);
+
+        additionalRequirAddOrderSends.add(additionalRequir);
+        additionalRequirAddOrderSends.add(additionalRequirAddOrderSend);
+
+        addOrder.setAdditionalRequirements(additionalRequirAddOrderSends);
+
+        // Send Request
+        CustomerPresenter customerPresenter = new CustomerPresenter();
+        ManagerOrderApiCust managerOrderApiCusta
+                = new ManagerOrderApiCust(customerPresenter);
+        managerOrderApiCusta.addOrder(addOrder);
+
+        // Test reqvest, servers`s parties
+        RecordedRequest request = server.takeRequest();
+        assertEquals("application/json; charset=UTF-8", request.getHeader("Content-Type"));
+        assertEquals("21334sfg23", request.getHeader("Authorization"));
+        assertEquals("POST /order HTTP/1.1", request.getRequestLine());
+        assertEquals("{" +
+                "\"customerId\":123421," +
+                "\"startTime\":\"2016-11-24T20:10\"," +
+                "\"startPoint\":\"Вул. лоховська 12\"," +
+                "\"endPoint\":\"Вул. татата\"," +
+                "\"additionalRequirements\":" +
+                "[{\"reqId\":567,\"reqValueId\":12}," +
+                "{\"reqId\":123,\"reqValueId\":34}]" +
+                "}", request.getBody().readUtf8());
+        TimeUnit.SECONDS.sleep(3);
+
+        // Test response code
+        assertEquals(0, customerPresenter.getCodeMsg());
+
+    }
+
+    @Test
+    public void testDeleteOrder() throws Exception {
+
+        // Send Request
+        CustomerPresenter customerPresenter = new CustomerPresenter();
+        ManagerOrderApiCust managerOrderApiCusta
+                = new ManagerOrderApiCust(customerPresenter);
+        managerOrderApiCusta.deleteOrder(12);
+
+        // Test request, servers`s parties
+        RecordedRequest request = server.takeRequest();
+        assertEquals("application/json", request.getHeader("Content-Type"));
+        assertEquals("21334sfg23", request.getHeader("Authorization"));
+        assertEquals("DELETE /order/12 HTTP/1.1", request.getRequestLine());
+
+        //Test response code
+        assertEquals(0, customerPresenter.getCodeMsg());
+
+    }
+
+    @Test
+    public void testUpdateOrder() throws Exception {
+
+        // Testing Data
+
+        List<AdditionalRequirAddOrderSend> additionalRequirAddOrderSends
+                = new ArrayList<>();
+
+        AdditionalRequirAddOrderSend additionalRequirAddOrderSend
+                = new AdditionalRequirAddOrderSend();
+        additionalRequirAddOrderSend.setReqId(123);
+        additionalRequirAddOrderSend.setReqValueId(34);
+
+        AdditionalRequirAddOrderSend additionalRequir
+                = new AdditionalRequirAddOrderSend();
+
+        additionalRequir.setReqId(567);
+        additionalRequir.setReqValueId(12);
+
+        additionalRequirAddOrderSends.add(additionalRequir);
+        additionalRequirAddOrderSends.add(additionalRequirAddOrderSend);
+
+        UpdateOrder updateOrder = new UpdateOrder();
+        updateOrder.setStartTime("2016-11-24T20:10");
+        updateOrder.setStartPoint("Вул. Лалка");
+        updateOrder.setEndPoint("Вул. Крарыр");
+
+        updateOrder.setAdditionalRequirements(additionalRequirAddOrderSends);
+        // Send Request
+        CustomerPresenter customerPresenter = new CustomerPresenter();
+        ManagerOrderApiCust managerOrderApiCusta
+                = new ManagerOrderApiCust(customerPresenter);
+        managerOrderApiCusta.updateOrder(updateOrder, 12);
+
+        // Test request, servers`s parties
+        RecordedRequest request = server.takeRequest();
+        assertEquals("application/json; charset=UTF-8", request.getHeader("Content-Type"));
+        assertEquals("21334sfg23", request.getHeader("Authorization"));
+        assertEquals("PUT /order/12 HTTP/1.1", request.getRequestLine());
+        assertEquals("{" +
+                "\"startTime\":\"2016-11-24T20:10\"," +
+                "\"startPoint\":\"Вул. Лалка\"," +
+                "\"endPoint\":\"Вул. Крарыр\"," +
+                "\"additionalRequirements\":" +
+                "[{\"reqId\":567,\"reqValueId\":12}," +
+                "{\"reqId\":123,\"reqValueId\":34}]" +
+                "}", request.getBody().readUtf8());
+
+        //Test response code
+        assertEquals(0, customerPresenter.getCodeMsg());
+    }
+
     @After
     public void afterTest() throws Exception {
 

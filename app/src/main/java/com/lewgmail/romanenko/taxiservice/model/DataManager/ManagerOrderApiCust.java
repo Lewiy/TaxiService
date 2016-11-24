@@ -6,6 +6,7 @@ import com.lewgmail.romanenko.taxiservice.model.pojo.AddOrder;
 import com.lewgmail.romanenko.taxiservice.model.pojo.UpdateOrder;
 import com.lewgmail.romanenko.taxiservice.presenter.CustomerPresenter;
 
+import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -37,7 +38,10 @@ public class ManagerOrderApiCust {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        if (e instanceof HttpException)
+                            mCustomerPresenter.onFinishRequest(((HttpException) e).code(), e.getMessage());
+                        else
+                            mCustomerPresenter.onFinishRequest(((HttpException) e).code(), e.getMessage());
                     }
 
                     @Override
@@ -62,7 +66,10 @@ public class ManagerOrderApiCust {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        if (e instanceof HttpException)
+                            mCustomerPresenter.onFinishRequest(((HttpException) e).code(), e.getMessage());
+                        else
+                            mCustomerPresenter.onFinishRequest(((HttpException) e).code(), e.getMessage());
                     }
 
                     @Override
@@ -88,7 +95,10 @@ public class ManagerOrderApiCust {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        if (e instanceof HttpException)
+                            mCustomerPresenter.onFinishRequest(((HttpException) e).code(), e.getMessage());
+                        else
+                            mCustomerPresenter.onFinishRequest(((HttpException) e).code(), e.getMessage());
                     }
 
                     @Override

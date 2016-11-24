@@ -15,6 +15,7 @@ public class BasePresenter implements BasePresenterInterface {
 
     // for testing
     private String responseMsg;
+    private int responceCode;
 
     public BasePresenter(View view) {
         this.view = view;
@@ -48,11 +49,15 @@ public class BasePresenter implements BasePresenterInterface {
         return this.responseMsg;
     }
 
+    public int getResponceCode() {
+        return this.responceCode;
+    }
+
     /*
      Error processing
      */
     public void onFinishRequest(int responceCode, String responseMsg) {
-
+        this.responceCode = responceCode;
         this.responseMsg = responseMsg;
     }
 

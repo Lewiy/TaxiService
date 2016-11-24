@@ -12,9 +12,9 @@ import javax.annotation.Generated;
 @Generated("org.jsonschema2pojo")
 public class AddOrder {
 
-    @SerializedName("orderId")
+    @SerializedName("customerId")
     @Expose
-    private String orderId;
+    private long customerId;
     @SerializedName("startTime")
     @Expose
     private String startTime;
@@ -26,20 +26,21 @@ public class AddOrder {
     private String endPoint;
     @SerializedName("additionalRequirements")
     @Expose
-    private List<String> additionalRequirements = new ArrayList<String>();
+    private List<AdditionalRequirAddOrderSend> additionalRequirements
+            = new ArrayList<AdditionalRequirAddOrderSend>();
 
     /**
      * @return The orderId
      */
-    public String getOrderId() {
-        return orderId;
+    public long getCustomerId() {
+        return customerId;
     }
 
     /**
      * @param orderId The orderId
      */
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setCustomerId(long customerId) {
+        this.customerId = customerId;
     }
 
     /**
@@ -87,14 +88,14 @@ public class AddOrder {
     /**
      * @return The additionalRequirements
      */
-    public List<String> getAdditionalRequirements() {
+    public List<AdditionalRequirAddOrderSend> getAdditionalRequirements() {
         return additionalRequirements;
     }
 
     /**
      * @param additionalRequirements The additionalRequirements
      */
-    public void setAdditionalRequirements(List<String> additionalRequirements) {
+    public void setAdditionalRequirements(List<AdditionalRequirAddOrderSend> additionalRequirements) {
         this.additionalRequirements = additionalRequirements;
     }
 

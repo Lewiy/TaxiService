@@ -54,7 +54,7 @@ public class ManagerOrderApiDrivCust {
                     @Override
                     public void onNext(OrderId orderId) {
                         System.out.println(" Дані пришли - кастомер" + orderId.getCustomer());
-                        mBasePresenter.setOrderSpecificId(orderId);
+                        // mBasePresenter.setOrderSpecificId(orderId);
                     }
                 });
     }
@@ -76,7 +76,7 @@ public class ManagerOrderApiDrivCust {
 
                     @Override
                     public void onError(Throwable e) {
-                        System.out.println("Помилка");
+
                         if (e instanceof HttpException)
                             mBasePresenter.onFinishRequest(((HttpException) e).code(), e.getMessage());
                         else mBasePresenter.onFinishRequest(0, e.getMessage());
@@ -85,7 +85,6 @@ public class ManagerOrderApiDrivCust {
                     @Override
                     public void onNext(String s) {
 
-                        mBasePresenter.onFinishRequest(200,s);
                     }
                 });
     }

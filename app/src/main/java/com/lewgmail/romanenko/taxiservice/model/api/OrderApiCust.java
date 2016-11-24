@@ -16,7 +16,7 @@ import rx.Observable;
  */
 
 public interface OrderApiCust {
-    @POST("order")
+    @POST("/order")
     Observable<String> addOrder(@Header("Authorization") String authorization,
                                 @Body() AddOrder addOrder);
 

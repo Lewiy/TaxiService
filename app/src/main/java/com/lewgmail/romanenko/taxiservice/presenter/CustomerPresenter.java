@@ -6,6 +6,10 @@ package com.lewgmail.romanenko.taxiservice.presenter;
 
 public class CustomerPresenter {
 
+    private int codeMsg;
+
+    private String responseMsg;
+
     public void addOrder() {
 
     }
@@ -17,4 +21,21 @@ public class CustomerPresenter {
     public void updateOrder() {
 
     }
+
+    public void onFinishRequest(int codeMsg, String responseMsg) {
+
+        this.codeMsg = codeMsg;
+        this.responseMsg = responseMsg;
+
+    }
+
+    public int getCodeMsg() {
+        return codeMsg;
+    }
+
+    public String getResponseMsg() {
+        return responseMsg;
+    }
+
+
 }
