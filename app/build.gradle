@@ -30,7 +30,7 @@ dependencies {
     // retrofit dependecies
     // rxJava
     //jsonschema2pojo
-    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:appcompat-v7:24.1.1'
 
     compile 'com.squareup.retrofit2:retrofit:2.0.1'
     compile 'com.squareup.retrofit2:converter-gson:2.0.1'
@@ -41,7 +41,7 @@ dependencies {
 
 
     compile 'org.glassfish.main:javax.annotation:4.0-b33'
-    compile 'com.android.support:design:24.2.1'
+    compile 'com.android.support:design:24.1.1'
     testCompile 'junit:junit:4.12'
 
     //butterKnife

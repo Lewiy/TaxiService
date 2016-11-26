@@ -1,9 +1,12 @@
 package com.lewgmail.romanenko.taxiservice.view.activity;
 
+
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.lewgmail.romanenko.taxiservice.R;
+import com.lewgmail.romanenko.taxiservice.view.fragmentClient.AddOrderFragment;
 
 public class ClientAccount extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -80,10 +84,12 @@ public class ClientAccount extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        Fragment fragment = null;
+        Class fragmentClass = null;
         int id = item.getItemId();
 
         if (id == R.id.add_order) {
-            // Handle the camera action
+            fragmentClass = AddOrderFragment.class;
         } else if (id == R.id.order_list) {
 
         } else if (id == R.id.edit_profile) {
@@ -94,6 +100,18 @@ public class ClientAccount extends AppCompatActivity
 
         }
 
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // Вставляем фрагмент, заменяя текущий фрагмент
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_client_account, fragment).commit();
+        // Выделяем выбранный пункт меню в шторке
+        item.setChecked(true);
+        // Выводим выбранный пункт в заголовке
+        setTitle(item.getTitle());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
