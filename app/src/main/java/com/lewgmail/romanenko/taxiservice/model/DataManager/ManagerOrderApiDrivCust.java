@@ -1,7 +1,7 @@
 package com.lewgmail.romanenko.taxiservice.model.dataManager;
 
-import com.lewgmail.romanenko.taxiservice.model.api.OrderApiDrivCust;
 import com.lewgmail.romanenko.taxiservice.model.api.Services;
+import com.lewgmail.romanenko.taxiservice.model.api.apiMain.OrderApiDrivCust;
 import com.lewgmail.romanenko.taxiservice.model.pojo.MarkOrder;
 import com.lewgmail.romanenko.taxiservice.model.pojo.OrderId;
 import com.lewgmail.romanenko.taxiservice.presenter.BasePresenter;

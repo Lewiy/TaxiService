@@ -1,7 +1,7 @@
 package com.lewgmail.romanenko.taxiservice.model.dataManager;
 
 import com.lewgmail.romanenko.taxiservice.model.api.Services;
-import com.lewgmail.romanenko.taxiservice.model.api.UserServices;
+import com.lewgmail.romanenko.taxiservice.model.api.apiMain.UserServices;
 import com.lewgmail.romanenko.taxiservice.model.pojo.Token;
 import com.lewgmail.romanenko.taxiservice.model.pojo.User;
 

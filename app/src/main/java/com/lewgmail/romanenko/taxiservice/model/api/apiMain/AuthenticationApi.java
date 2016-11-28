@@ -1,4 +1,4 @@
-package com.lewgmail.romanenko.taxiservice.model.api;
+package com.lewgmail.romanenko.taxiservice.model.api.apiMain;
 
 /**
  * Created by Lev on 08.11.2016.

@@ -18,6 +18,8 @@ import android.view.View;
 
 import com.lewgmail.romanenko.taxiservice.R;
 import com.lewgmail.romanenko.taxiservice.view.fragmentClient.AddOrderFragment;
+import com.lewgmail.romanenko.taxiservice.view.fragmentClient.EditProfileFragment;
+import com.lewgmail.romanenko.taxiservice.view.fragmentClient.OrderListFragment;
 
 public class ClientAccount extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -91,9 +93,9 @@ public class ClientAccount extends AppCompatActivity
         if (id == R.id.add_order) {
             fragmentClass = AddOrderFragment.class;
         } else if (id == R.id.order_list) {
-
+            fragmentClass = OrderListFragment.class;
         } else if (id == R.id.edit_profile) {
-
+            fragmentClass = EditProfileFragment.class;
         } else if (id == R.id.settings) {
 
         } else if (id == R.id.log_out) {

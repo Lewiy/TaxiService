@@ -1,6 +1,6 @@
 package com.lewgmail.romanenko.taxiservice.api;
 
-import com.lewgmail.romanenko.taxiservice.model.api.UserServices;
+import com.lewgmail.romanenko.taxiservice.model.api.apiMain.UserServices;
 import com.lewgmail.romanenko.taxiservice.model.dataManager.ManagerOrderApiCust;
 import com.lewgmail.romanenko.taxiservice.model.dataManager.ManagerOrderApiDrivCust;
 import com.lewgmail.romanenko.taxiservice.model.dataManager.ManagerOrderApiDriver;
