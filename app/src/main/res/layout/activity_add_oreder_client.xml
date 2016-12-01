@@ -12,8 +12,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <AutoCompleteTextView
-                android:id="@+id/date_ride"
+            <EditText
+                android:id="@+id/date_ride_act"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/date_ride"
@@ -22,12 +22,13 @@
                 android:singleLine="true" />
 
         </android.support.design.widget.TextInputLayout>
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <AutoCompleteTextView
-                android:id="@+id/time_ride"
+            <EditText
+                android:id="@+id/time_ride_act"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/time_ride"
@@ -41,8 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <AutoCompleteTextView
-                android:id="@+id/start_point"
+            <EditText
+                android:id="@+id/start_point_act"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/start_point"
@@ -56,8 +57,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <AutoCompleteTextView
-                android:id="@+id/end_point"
+            <EditText
+                android:id="@+id/end_point_act"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/end_point"
@@ -71,8 +72,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <AutoCompleteTextView
-                android:id="@+id/price"
+            <EditText
+                android:id="@+id/price_act"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/price"
@@ -83,9 +84,10 @@
         </android.support.design.widget.TextInputLayout>
 
         <Spinner
-            android:id="@+id/set_status_order"
+            android:id="@+id/set_status_order_act"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:prompt="@string/car_type_title">
 
         </Spinner>

@@ -1,7 +1,9 @@
 package com.lewgmail.romanenko.taxiservice.view.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,27 +12,31 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.lewgmail.romanenko.taxiservice.R;
+import com.lewgmail.romanenko.taxiservice.view.activity.AddOrderActivity;
 
 import java.util.HashMap;
 import java.util.List;
+
+import static android.R.attr.value;
 
 /**
  * Created by Lev on 27.11.2016.
  */
 
-public class AdapterForListOrderClient extends BaseExpandableListAdapter{
+public class AdapterForListOrderClient extends BaseExpandableListAdapter {
 
     private Context context;
     private List<String> expListTitle;
     private HashMap<String, List<String>> expListDetail;
+    private Fragment fragmentMy;
 
     public AdapterForListOrderClient(Context context, List<String> expListTitle,
-                                     HashMap<String, List<String>> expListDetail) {
+                                     HashMap<String, List<String>> expListDetail,Fragment fragment) {
         this.context = context;
         this.expListTitle = expListTitle;
         this.expListDetail = expListDetail;
+        this.fragmentMy = fragment;
     }
-
 
     @Override
     public int getGroupCount() {
@@ -85,7 +91,9 @@ public class AdapterForListOrderClient extends BaseExpandableListAdapter{
             buttonOnTitleGroup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent myIntent = new Intent(context, AddOrderActivity.class);
+                    myIntent.putExtra("key", value); //Optional parameters
+                    context.startActivity(myIntent);
                 }
             });
         }

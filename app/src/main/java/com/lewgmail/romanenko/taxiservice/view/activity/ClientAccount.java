@@ -118,4 +118,5 @@ public class ClientAccount extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

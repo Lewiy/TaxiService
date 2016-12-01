@@ -17,7 +17,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServicesGoogleMaps {
     public static final String API_ENDPOINT =
-            "https://maps.googleapis.com/maps/api/distancematrix/json";
+            "https://maps.googleapis.com/maps/api/distancematrix/";
+    /*public static final String API_ENDPOINT =
+            "http://localhost:8080/";*/
     private static final int TIMEOUT = 60;
     private static final int WRITE_TIMEOUT = 120;
     private static final int CONNECT_TIMEOUT = 10;

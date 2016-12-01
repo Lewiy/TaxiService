@@ -38,13 +38,13 @@ public class OrderListFragment extends android.support.v4.app.Fragment {
         return view;
     }
 
+
     private void initialiseExpList() {
 
         expListDetail = TestDataForList.loadData();
 
         expListTitle = new ArrayList<>(expListDetail.keySet());
-        expListAdapter = new AdapterForListOrderClient(this.getActivity(), expListTitle, expListDetail);
-
+        expListAdapter = new AdapterForListOrderClient(this.getActivity(), expListTitle, expListDetail, this);
         expListView.setAdapter(expListAdapter);
         expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 

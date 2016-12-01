@@ -56,7 +56,7 @@ public class TestOrderApi extends BaseTest {
     @Before
     public void beforeTest() throws Exception {
 
-        // Не вэдома хрэнь, але пока без неї ніяк
+        // Невэдома хрэнь, але пока без неї ніяк
 
         RxAndroidPlugins.getInstance().registerSchedulersHook(new RxAndroidSchedulersHook() {
             @Override

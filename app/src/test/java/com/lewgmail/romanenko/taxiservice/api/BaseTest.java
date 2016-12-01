@@ -7,4 +7,5 @@ package com.lewgmail.romanenko.taxiservice.api;
 public class BaseTest {
 
     protected String serverAdress = "http://localhost:8080/";
+    // protected String getServerAdressGoogleMAp = "https://maps.googleapis.com/maps/api/distancematrix/";
 }

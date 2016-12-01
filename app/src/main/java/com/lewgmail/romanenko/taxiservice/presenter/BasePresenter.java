@@ -61,5 +61,9 @@ public class BasePresenter implements BasePresenterInterface {
         this.responseMsg = responseMsg;
     }
 
+    public void calculateDistance() {
+
+    }
+
 
 }
