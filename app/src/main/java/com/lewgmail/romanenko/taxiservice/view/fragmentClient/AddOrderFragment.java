@@ -1,6 +1,7 @@
 package com.lewgmail.romanenko.taxiservice.view.fragmentClient;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,7 @@ import com.lewgmail.romanenko.taxiservice.view.activity.MapActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.R.attr.value;
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by Lev on 25.11.2016.
@@ -24,7 +25,8 @@ public class AddOrderFragment extends android.support.v4.app.Fragment {
     EditText start_point;
     @BindView(R.id.end_point)
     EditText end_point;
-
+    //
+    SharedPreferences sPref;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_client_add_order, container, false);
@@ -38,7 +40,7 @@ public class AddOrderFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(getActivity(), MapActivity.class);
-                myIntent.putExtra("key", value); //Optional parameters
+                myIntent.putExtra("keyAddressFromMarker", "StartPoint"); //Optional parameters
                 getActivity().startActivity(myIntent);
             }
         });
@@ -46,9 +48,24 @@ public class AddOrderFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(getActivity(), MapActivity.class);
-                myIntent.putExtra("key", value); //Optional parameters
+                myIntent.putExtra("keyAddressFromMarker", "EndPoint"); //Optional parameters
                 getActivity().startActivity(myIntent);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        sPref = getActivity().getPreferences(MODE_PRIVATE);
+        if (sPref.getString("StartPoint", "") != null) {
+            start_point.setText(sPref.getString("StartPoint", ""));
+        } else if (sPref.getString("EndPoint", "") != null) {
+            end_point.setText(sPref.getString("EndPoint", ""));
+        }
+    }
+
+    private void setDataAfterResume() {
+
     }
 }

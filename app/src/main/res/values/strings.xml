@@ -29,7 +29,7 @@
     <string name="text_lable_num_passenger">Num passenger</string>
     <string name="text_lable_car_type">Car type</string>
     <!--spinner resurses-->
-    <string name="car_type_title">num passenger</string>
+    <string name="car_type_title">type car</string>
     <string-array name="set_num_passenger">
         <item>1</item>
         <item>2</item>
@@ -41,16 +41,11 @@
         <item>8</item>
     </string-array>
 
-    <string name="num_passenger_title">type car</string>
+    <string name="num_passenger_title">number passenger</string>
     <string-array name="set_car_type">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
+        <item>Truck</item>
+        <item>Passenger_car</item>
+        <item>Minibus</item>
     </string-array>
 
     <!--reset password -->
@@ -90,5 +85,33 @@
 
     <!-- oreder list client -->
     <string name="title_item_list">Time and date of order</string>
+
+    <!-- edit order client -->
+    <string name="calculate_price"> culculate price</string>
+    <string name="km_distance">distance</string>
+    <string name="customer_name"> customer </string>
+    <string name="driver_name"> driver </string>
+    <string name="value"> value </string>
+    <string name="accept">accept</string>
+    <string name="decline">decline</string>
+    <string name="type_status_order"> Status order </string>
+    <string name="type_status_reckoning"> type reckoning </string>
+    <string name="taxi_driver">taxi driver</string>
+    <!--spinner resurses-->
+    <string name="set_car_type">Status</string>
+    <string-array name="set_type_status_order">
+        <item>New</item>
+        <item>Accepted</item>
+        <item>Cancelled</item>
+        <item>Done</item>
+    </string-array>
+    <string-array name="set_type_reckoning">
+        <item>Cash</item>
+        <item>Credit Card</item>
+        <item>kiss</item>
+    </string-array>
+
+    <!--google map -->
+    <string name="button_ok"> OK </string>
 
 </resources>

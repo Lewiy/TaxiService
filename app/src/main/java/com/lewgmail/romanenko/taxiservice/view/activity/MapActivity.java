@@ -5,10 +5,13 @@ package com.lewgmail.romanenko.taxiservice.view.activity;
  */
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -19,46 +22,39 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.lewgmail.romanenko.taxiservice.R;
+import com.lewgmail.romanenko.taxiservice.presenter.MapGooglePresenter;
 
 import java.util.List;
 import java.util.Locale;
 
-public class MapActivity extends Activity implements OnMapReadyCallback {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class MapActivity extends Activity implements OnMapReadyCallback, IView {
+    @BindView(R.id.button_ok)
+    Button buttonOK;
+
+    // Technical Object
     private MapFragment googleMap;
     private LatLng position;
     private Geocoder geo;
+    private MapGooglePresenter mapGooglePresenter;
+    private SharedPreferences sPref;
+    private Intent intentMy;
+
+    // Business object
+    private String addressFromMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.google_map);
+        ButterKnife.bind(this);
+        intentMy = getIntent();
         createMapView();
+        mapGooglePresenter = new MapGooglePresenter(this);
         // addMarker();
-    }
-
-    private void createMapView() {
-        /**
-         * Catch the null pointer exception that
-         * may be thrown when initialising the map
-         */
-        try {
-            if (null == googleMap) {
-                googleMap = (MapFragment) getFragmentManager()
-                        .findFragmentById(R.id.mapView);
-                googleMap.getMapAsync(this);
-
-                /**
-                 * If the map is still null after attempted initialisation,
-                 * show an error to the user
-                 */
-                if (null == googleMap) {
-                    Toast.makeText(getApplicationContext(),
-                            "Error creating map", Toast.LENGTH_SHORT).show();
-                }
-            }
-        } catch (NullPointerException exception) {
-            Log.e("mapApp", exception.toString());
-        }
     }
 
     @Override
@@ -95,13 +91,6 @@ public class MapActivity extends Activity implements OnMapReadyCallback {
             @Override
             public void onMarkerDragEnd(Marker marker) {
                 position = marker.getPosition(); //
-              /*  Toast.makeText(
-                        MapActivity.this,
-                        "Lat " + position.latitude + " "
-                                + "Long " + position.longitude,
-                        Toast.LENGTH_LONG).show();*/
-
-                //
                 try {
                     geo = new Geocoder(MapActivity.this.getApplicationContext(), Locale.getDefault());
                     List<Address> addresses = geo.getFromLocation(position.latitude, position.longitude, 1);
@@ -112,8 +101,13 @@ public class MapActivity extends Activity implements OnMapReadyCallback {
                                 Toast.LENGTH_SHORT).show();
                     } else {
                         if (addresses.size() > 0) {
-                            //yourtextfieldname.setText(addresses.get(0).getFeatureName() + ", " + addresses.get(0).getLocality() +", " + addresses.get(0).getAdminArea() + ", " + addresses.get(0).getCountryName());
-                            Toast.makeText(getApplicationContext(), "Address:- " + addresses.get(0).getFeatureName() + addresses.get(0).getAdminArea() + addresses.get(0).getLocality(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),
+                                    "Address:- " + addresses.get(0).getFeatureName() +
+                                            addresses.get(0).getAdminArea() +
+                                            addresses.get(0).getLocality(), Toast.LENGTH_LONG).show();
+                            addressFromMarker = addresses.get(0).getFeatureName() +
+                                    addresses.get(0).getAdminArea() +
+                                    addresses.get(0).getLocality();
                         }
                     }
                 } catch (Exception e) {
@@ -121,9 +115,63 @@ public class MapActivity extends Activity implements OnMapReadyCallback {
                 }
             }
         });
+
     }
 
    /* public LatLng culculateDistance() {
 
     }*/
+
+    private void createMapView() {
+        /**
+         * Catch the null pointer exception that
+         * may be thrown when initialising the map
+         */
+        try {
+            if (null == googleMap) {
+                googleMap = (MapFragment) getFragmentManager()
+                        .findFragmentById(R.id.mapView);
+                googleMap.getMapAsync(this);
+
+                /**
+                 * If the map is still null after attempted initialisation,
+                 * show an error to the user
+                 */
+                if (null == googleMap) {
+                    Toast.makeText(getApplicationContext(),
+                            "Error creating map", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } catch (NullPointerException exception) {
+            Log.e("mapApp", exception.toString());
+        }
+
+    }
+
+    @OnClick(R.id.button_ok)
+    public void buttonOk() {
+        Intent returnIntent = getIntent();
+        returnIntent.putExtra(getDataFromPreviousActivity(intentMy), addressFromMarker);
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
+    }
+
+
+    private String getDataFromPreviousActivity(Intent intent) {
+        return intent.getStringExtra("keyAddressFromMarker");
+    }
+
+    ///////////////////////////////////// Up date View  ////////////////////////////////////
+    @Override
+    public void showError(String error) {
+        Toast.makeText(
+                MapActivity.this,
+                error,
+                Toast.LENGTH_LONG).show();
+    }
+
+    public void setPrice() {
+
+    }
+
 }

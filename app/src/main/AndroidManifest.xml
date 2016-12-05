@@ -52,7 +52,7 @@
         <activity
             android:name=".view.activity.MapActivity"
             android:label="@string/title_activity_client_account"></activity>
-        <activity android:name=".view.activity.AddOrderActivity" />
+        <activity android:name=".view.activity.EditOrderActivity" />
     </application>
 
 </manifest>

@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.lewgmail.romanenko.taxiservice.R;
-import com.lewgmail.romanenko.taxiservice.view.activity.AddOrderActivity;
+import com.lewgmail.romanenko.taxiservice.view.activity.EditOrderActivity;
 
 import java.util.HashMap;
 import java.util.List;
@@ -91,7 +91,7 @@ public class AdapterForListOrderClient extends BaseExpandableListAdapter {
             buttonOnTitleGroup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent myIntent = new Intent(context, AddOrderActivity.class);
+                    Intent myIntent = new Intent(context, EditOrderActivity.class);
                     myIntent.putExtra("key", value); //Optional parameters
                     context.startActivity(myIntent);
                 }

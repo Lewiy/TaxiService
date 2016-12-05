@@ -6,5 +6,5 @@ package com.lewgmail.romanenko.taxiservice.presenter;
 
 public interface BasePresenterInterface {
 
-    void signIn();
+    void onStop();
 }

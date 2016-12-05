@@ -26,10 +26,6 @@ public class BasePresenter implements BasePresenterInterface {
 
     }
 
-    @Override
-    public void signIn() {
-
-    }
 
     /* for testing*/
     public OrderId getOrderSpecificId() {
@@ -66,4 +62,8 @@ public class BasePresenter implements BasePresenterInterface {
     }
 
 
+    @Override
+    public void onStop() {
+
+    }
 }

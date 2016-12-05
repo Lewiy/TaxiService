@@ -1,5 +1,7 @@
 package com.lewgmail.romanenko.taxiservice.model.dataManager;
 
+import com.lewgmail.romanenko.taxiservice.model.DTO.DataGoogleMapDTO;
+import com.lewgmail.romanenko.taxiservice.model.DTO.Mapper;
 import com.lewgmail.romanenko.taxiservice.model.api.ServicesGoogleMaps;
 import com.lewgmail.romanenko.taxiservice.model.api.apiGoogleMaps.ApiGoogleMaps;
 import com.lewgmail.romanenko.taxiservice.model.pojo.pojoResponseDistance.DistanceGoogleResponse;
@@ -9,6 +11,7 @@ import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -19,15 +22,17 @@ public class ManagerGoogleMaps {
 
     private BasePresenter basePresenter;
 
-    public ManagerGoogleMaps(BasePresenter basePresenter) {
-        this.basePresenter = basePresenter;
+    public ManagerGoogleMaps() {
+
     }
 
-    public void getDistance(double longitude1, double latitude1, double longitude2, double latitude2) {
+    public Observable<DataGoogleMapDTO> getDistance(double longitude1, double latitude1, double longitude2, double latitude2) {
+
         ApiGoogleMaps servises = ServicesGoogleMaps.createService(ApiGoogleMaps.class);
         Observable<DistanceGoogleResponse> observer = servises.getDistace(
                 Double.valueOf(longitude1) + "," + Double.valueOf(latitude1),
                 Double.valueOf(longitude2) + "," + Double.valueOf(latitude2));
+
         observer.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<DistanceGoogleResponse>() {
@@ -53,5 +58,13 @@ public class ManagerGoogleMaps {
                                 s.getRows().get(0).getElements().get(0).getDistance().getText());
                     }
                 });
+
+        return observer.map(new Func1<DistanceGoogleResponse, DataGoogleMapDTO>() {
+            @Override
+            public DataGoogleMapDTO call(DistanceGoogleResponse distanceGoogleResponse) {
+
+                return new Mapper(distanceGoogleResponse).getDTO();
+            }
+        });
     }
 }
